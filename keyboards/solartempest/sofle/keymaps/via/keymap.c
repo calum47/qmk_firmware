@@ -16,7 +16,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+
 #include QMK_KEYBOARD_H
+
+// Define the LAYOUT macro
+#define LAYOUT_split_4x6_5( \
+    L00, L01, L02, L03, L04, L05, L06, R00, R01, R02, R03, R04, R05, R06, \
+    L10, L11, L12, L13, L14, L15, L16, R10, R11, R12, R13, R14, R15, R16, \
+    L20, L21, L22, L23, L24, L25, L26, R20, R21, R22, R23, R24, R25, R26, \
+    L30, L31, L32, L33, L34, L35, L36, R30, R31, R32, R33, R34, R35, R36, \
+    L40, L41, L42, L43, L44, L45, L46, R40, R41, R42, R43, R44, R45, R46 \
+) { \
+    { L00, L01, L02, L03, L04, L05, L06 }, \
+    { L10, L11, L12, L13, L14, L15, L16 }, \
+    { L20, L21, L22, L23, L24, L25, L26 }, \
+    { L30, L31, L32, L33, L34, L35, L36 }, \
+    { L40, L41, L42, L43, L44, L45, L46 }, \
+    { R00, R01, R02, R03, R04, R05, R06 }, \
+    { R10, R11, R12, R13, R14, R15, R16 }, \
+    { R20, R21, R22, R23, R24, R25, R26 }, \
+    { R30, R31, R32, R33, R34, R35, R36 }, \
+    { R40, R41, R42, R43, R44, R45, R46 } \
+}
+
+// Define keymaps
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+    [0] = LAYOUT_split_4x6_5(
+        KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC, KC_NO, KC_NO, KC_NO,
+        KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_ENT, KC_NO, KC_NO, KC_NO, KC_NO,
+        KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO
+    ),
+};
+
 
 #ifdef ENCODER_ENABLE
 	#include "encoder.c"
@@ -119,7 +153,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {  //Can skip these
   KC_TRNS,	KC_F1,	KC_F2,	KC_F3,	KC_F4,	KC_F5,							KC_F6,	KC_F7,	KC_F8,	KC_F9,	KC_F10,		KC_F11,
   KC_GRV,	KC_1,	KC_2,	KC_3,	KC_4,	KC_5,	KC_RGHT,		KC_TRNS,KC_6,	KC_7,	KC_8,	KC_9,	KC_0,		KC_F12,
   KC_WREF,	KC_EXLM,KC_AT,	KC_HASH,KC_DLR,	KC_PERC,KC_TRNS,		KC_TRNS,KC_CIRC,KC_AMPR,KC_ASTR,KC_LPRN,KC_RPRN,	KC_PIPE,
-  KC_TRNS,	KC_EQL,	KC_MINS,KC_PLUS,KC_LCBR,KC_LCBR,KC_LEFT,		KC_TRNS,KC_LBRC,KC_RBRC,KC_DOT,	KC_COLN,KC_BSLS,	KC_TRNS,
+  KC_TRNS,	KC_EQL,	KC_MINS,KC_PPLS,KC_LCBR,KC_LCBR,KC_LEFT,		KC_TRNS,KC_LBRC,KC_RBRC,KC_DOT,	KC_COLN,KC_BSLS,	KC_TRNS,
 					KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,		KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS
 ),
 [3] = LAYOUT(
@@ -147,11 +181,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {  //Can skip these
 		} else if (!trackball_is_precision) {
 			pimoroni_trackball_set_rgbw(0, 27, 199, 0x00);
 		} else {
-			pimoroni_trackball_set_rgbw(217, 165, 33, 0x00);	//RGB_GOLDENROD in number form. 
+			pimoroni_trackball_set_rgbw(217, 165, 33, 0x00);	//RGB_GOLDENROD in number form.
 		}
 		#endif
 	}
-	
+
 	uint8_t pointing_device_handle_buttons(uint8_t buttons, bool pressed, pointing_device_buttons_t button) {
 		if (pressed) {
 			buttons |= 1 << (button);
@@ -228,7 +262,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			oled_timer = timer_read32();
 		}
 	#endif
-	
+
 	switch (keycode) { //For keycode overrides
 		#ifdef SUPER_ALT_TAB_ENABLE
 		case ATABF:	//Alt tab forwards
@@ -258,7 +292,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				}
 			return true;
 		#endif
-		  
+
 		case NMR:	//Move window to next monitor on right
 		  if (record->event.pressed) {
 			register_code(KC_LSFT);
@@ -351,7 +385,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				}
 				return true;
 		#endif
-			
+
 		#ifdef POINTING_DEVICE_ENABLE //Allow modes when trackball is enabled.
 				case PM_SCROLL:
 					if (record->event.pressed) {
@@ -390,7 +424,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 						break;
 			#endif
 		#endif
-		
+
 		#ifdef KEYBOARD_PET // KEYBOARD PET STATUS
 			case KC_LCTL:
 			case KC_RCTL:
@@ -416,7 +450,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				}
 				return true;
 		#endif
-		
+
 		#ifdef HAPTIC_ENABLE	//Set different patterns for keys on certain layers. In this case it is for gaming feedback.
 			case KC_G:
 				if (record->event.pressed && (get_highest_layer(layer_state)==1)) {
@@ -486,7 +520,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		  }
 		return state;
 	}
-	
+
 	bool led_update_user(led_t led_state)	//Lock key status indicators
 	{
 		if(led_state.caps_lock){

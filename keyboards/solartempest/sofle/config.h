@@ -20,15 +20,16 @@
 #include "config_common.h"
 
 // USB Device descriptor parameters
-#define VENDOR_ID       0xFC32
-#define PRODUCT_ID      0x1287 //Original is 0x0287 but we do not want to load default VIA keymap as it has errors for the bottom row
-#define DEVICE_VER      0x0002
-#define MANUFACTURER    Keyhive
-#define PRODUCT         Solarius_Sofle //New unique name
-#define DESCRIPTION     Rose version of the Sofle
+//#define VENDOR_ID       0xFC32
+//#define PRODUCT_ID      0x1287 //Original is 0x0287 but we do not want to load default VIA keymap as it has errors for the bottom row
+//#define DEVICE_VER      0x0002
+//#define MANUFACTURER    Keyhive
+//#define PRODUCT         Solarius_Sofle //New unique name
 
+#define SPLIT_KEYBOARD
 // Set which side is master
 #define MASTER_LEFT
+#define USE_I2C
 //#define EE_HANDS //Use this if EEPROM setting is desired instead
 
 // Key Matrix Settings
@@ -54,15 +55,13 @@
 
 // Combo settings
 #ifdef COMBO_ENABLE
-	#define COMBO_COUNT 1 //Number of tap combos used
+	//#define COMBO_COUNT 1 //Number of tap combos used
 	#define COMBO_TERM 400 //Default combo time is 200ms. This is the time delay allowed between deleting each whole word with shift-backspace.
 #endif
 
-#define D2SKATE_MACRO_ENABLE	//Enable Destiny 2 hunter skate macro (+224)
+//#define D2SKATE_MACRO_ENABLE	//Enable Destiny 2 hunter skate macro (+224)
 
 // Disabled to save space
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
 #define NO_ACTION_ONESHOT		//Save 244 bytes (-244).
 #define NO_RESET				//Save 40 bytes (-40).
 #define LAYER_STATE_8BIT		//For less than 8 bits worth of layers.
@@ -111,7 +110,7 @@
 	#define V_PEAK 2.0		//Per QMK docs.
 	#define V_RMS 2.0 		//Per ELV1411A datasheet.
 	#define F_LRA 150 		//Resonant frequency per ELV1411A datasheet.
-	
+
 	//#define HAPTIC_OFF_IN_LOW_POWER 1 //Turn off haptic feedback while sleeping (+54).
 	#define NO_HAPTIC_PUNCTUATION
 	#define NO_HAPTIC_ALPHA
@@ -126,10 +125,10 @@
 	#define PIMORONI_TRACKBALL_ROTATE //Change according to your particular installed trackball orientation.
 	#define PIMORONI_TRACKBALL_INVERT_Y
 	#define PIMORONI_TRACKBALL_INVERT_X
-#endif               
+#endif
 
 // RGB settings
-#ifdef RGBLIGHT_ENABLE
+/*#ifdef RGBLIGHT_ENABLE
 	#define RGB_DI_PIN D3
 	#define RGBLED_NUM 74
 	#define RGBLED_SPLIT {37,37}
@@ -163,4 +162,4 @@
 		0,	9,	12,	21,	24,	33,			40,	49,	52,	61,	64,	73, \
 				11,	22,	23,	34,	35,	38,	39,	50,	51,	62,		    \
 				10,				36,	37,				63		    )
-#endif
+#endif*/
